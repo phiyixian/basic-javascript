@@ -1,47 +1,75 @@
-// function declaration = define a reusable block of code to perform a specific task
+// constructor = special method for defining properties and methods of objects
 
-function helloWorld(){
-    console.log("Hello World");
+function Car(make, model, year, color) {
+    this.make = make,
+    this.model = model,
+    this.year = year,
+    this.color = color
 }
 
-// function expressoin = a way to define function as values or variables
+const carl = new Car('Toyota', 'Corolla', 2020, 'blue');
+console.log(carl.make);
 
-const hello = function(){
-    console.log("Hello World");
+// class provide more structured way to work with objects
+
+class Product {
+    constructor(name, price){
+        this.name = name;
+        this.price = price;
+    }
+
+    displayProduct() {
+        console.log(`Product: ${this.name}, Price: $${this.price}`);
+    }
+
+    calculateTotal(salesTax){
+        return this.price + (this.price * salesTax);
+    }
 }
 
-hello();
-setTimeout(hello, 3000);
+const product1 = new Product('Laptop', 999.99);
+product1.displayProduct();
+const total = product1.calculateTotal(0.07);
+console.log(`Total with tax: $${total.toFixed(2)}`);
 
-const numbers = [1,2,3,4,5];
-const squares = numbers.map(square);
-console.log(squares);
+//static = keyword to define methods or properties that belong to the class itself
 
-function square(element){
-    return Math.pow(element, 2);
+class MathUtil {
+    static PI = 3.14159;
+
+    static getDiameter(radius){
+        return radius * 2;
+    }
+
+    static getCircumference(radius){
+        return 2 * MathUtil.PI * radius;
+    }
+}
+console.log(MathUtil.PI);
+console.log(MathUtil.getDiameter(5));
+console.log(MathUtil.getCircumference(5));
+
+class User{
+    static userCount = 0;
+
+    constructor(username) {
+        this.username = username;
+        User.userCount++;
+    }
+
+    sayHello() {
+        console.log(`Hello, ${this.username}`);
+    }
+
+    static getUserCount() {
+        console.log(`There are ${User.userCount} users.`);
+    }
 }
 
-const squares2 = numbers.map(function(element){
-    return Math.pow(element, 2);
-});
-console.log(squares2);
+const user1 = new User('Alice');
+const user2 = new User('Bob');
+console.log(user1.username);
+console.log(User.userCount);
 
-const evenNums = numbers.filter(function(element){
-    return element % 2 === 0;
-})
-console.log(evenNums);
-
-const total = numbers.reduce(function(accumulator, element){
-    return accumulator + element;
-})
-console.log(total);
-
-//arrow function = a shorter syntax for writing function expressions
-
-const hello2 = (name, age) => {
-    console.log("Hello " + name);
-    console.log("Hey " + age);
-};
-hello2("P", 20);
-
-const squares3 = numbers.map((element) => Math.pow(element, 2));
+user1.sayHello();
+User.getUserCount();
